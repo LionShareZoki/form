@@ -5,8 +5,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { submitForm, resetForm } from "../../redux/formActions";
 import { RootState } from "../../redux/rootReducer";
-import postUserData from "../../apiHandlers/formApis";
-import { getUserDataFromStore } from "../../constants/formData";
+import postUserData from "../../apiHandlers/formApiHandler";
+import { getUserDataFromStore } from "../../functions/formData";
 
 function Form() {
   const dispatch = useDispatch();

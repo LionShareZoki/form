@@ -9,8 +9,10 @@ dotenv.config();
 const PORT = process.env.PORT;
 
 const app = express();
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 migrate();
 

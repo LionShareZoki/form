@@ -1,6 +1,7 @@
 import axios from "axios";
+import { MyFormData } from "../redux/formTypes";
 
-async function postUserData(url: string, userData: FormData) {
+async function postUserData(url: string, userData: MyFormData) {
   try {
     const response = await axios.post(url, userData);
     console.log("Response:", response.data);

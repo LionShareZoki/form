@@ -3,14 +3,14 @@ export const RESET_FORM = "RESET_FORM";
 
 interface SubmitFormAction {
   type: typeof SUBMIT_FORM;
-  payload: FormData;
+  payload: MyFormData;
 }
 
 interface ResetFormAction {
   type: typeof RESET_FORM;
 }
 
-export interface FormData {
+export interface MyFormData {
   firstName: string;
   lastName: string;
   address: string;
