@@ -1,0 +1,35 @@
+.formWrapper {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: fit-content;
+}
+
+.formInputDivCheckbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.formInputDivCheckbox label {
+  font-weight: bold;
+}
+
+.formInputDivCheckbox input {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+.buttonDiv {
+  margin-top: 7%;
+  display: flex;
+  justify-content: center;
+}
