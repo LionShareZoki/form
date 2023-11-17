@@ -1,9 +1,11 @@
+import { MyFormData } from "./formTypes";
+
 export const SUBMIT_FORM = "SUBMIT_FORM";
 export const RESET_FORM = "RESET_FORM";
 
 interface SubmitFormAction {
   type: typeof SUBMIT_FORM;
-  payload: FormData;
+  payload: MyFormData;
 }
 
 interface ResetFormAction {

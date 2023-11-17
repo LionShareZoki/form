@@ -1,5 +1,10 @@
 import "./FormInput.scoped.css";
 import React, { useState } from "react";
+import {
+  validateEmail,
+  validatePhone,
+  validateText,
+} from "../../services/validationService";
 
 interface FormInputProps {
   name: string;
@@ -9,7 +14,6 @@ interface FormInputProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  // validate: (value: T) => boolean; // TODO VALIDATION funkcija koja kaze jel podatak unutar ovog inputa validan ili ne
 }
 
 function FormInput(props: FormInputProps) {
@@ -22,32 +26,18 @@ function FormInput(props: FormInputProps) {
   };
 
   const validate = (inputValue: string) => {
+    let error = null;
     switch (props.type) {
       case "tel":
-        if (inputValue.trim() === "") {
-          setError("Required");
-        } else if (!/^\+\d{10}$/.test(inputValue)) {
-          setError("Bad format");
-        } else {
-          setError(null);
-        }
+        error = validatePhone(inputValue);
         break;
       case "email":
-        if (inputValue.trim() === "") {
-          setError("Required");
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValue)) {
-          setError("Bad format");
-        } else {
-          setError(null);
-        }
+        error = validateEmail(inputValue);
         break;
       default:
-        if (inputValue.trim() === "") {
-          setError("Required");
-        } else {
-          setError(null);
-        }
+        error = validateText(inputValue);
     }
+    setError(error);
   };
 
   return (

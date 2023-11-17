@@ -1,6 +1,6 @@
-import { SUBMIT_FORM, RESET_FORM, FormData, FormAction } from "./formTypes";
+import { SUBMIT_FORM, RESET_FORM, MyFormData, FormAction } from "./formTypes";
 
-const initialState: { formData: FormData } = {
+const initialState: { formData: MyFormData } = {
   formData: {
     firstName: "",
     lastName: "",
