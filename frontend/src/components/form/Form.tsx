@@ -9,22 +9,21 @@ import postUserData from "../../apiHandlers/formApiHandler";
 import { getUserDataFromStore } from "../../services/getFormData";
 
 function Form() {
+  const USER_API_ENDPOINT = "http://localhost:5432/api/users";
   const dispatch = useDispatch();
   const formData = useSelector((state: RootState) => state.form.formData);
-  const data = getUserDataFromStore();
+  const userDataFromStore = getUserDataFromStore();
   const [isChecked, setIsChecked] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleCheckboxInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(!isChecked);
     setError(null);
     const { checked } = event.target;
     dispatch(submitForm({ ...formData, isChecked: checked }));
   };
 
-  const validate = () => {
+  const validateCheckbox = () => {
     if (!isChecked) {
       setError("Confirm before saving.");
     } else {
@@ -36,7 +35,7 @@ function Form() {
     dispatch(submitForm({ ...formData, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const isFormValid = Object.entries(formData).every(([key, value]) => {
@@ -49,11 +48,15 @@ function Form() {
     });
 
     if (isChecked && isFormValid) {
-      dispatch(submitForm(formData));
-      postUserData("http://localhost:5432/api/users", data);
-      console.log(data);
-      dispatch(resetForm());
-      setIsChecked(false);
+      try {
+        dispatch(submitForm(formData));
+        await postUserData(USER_API_ENDPOINT, userDataFromStore);
+        dispatch(resetForm());
+        setIsChecked(false);
+      } catch (error) {
+        console.error("Error posting data:", error);
+        setError("Error occurred while submitting data.");
+      }
     } else {
       setError("Please fill with valid data.");
     }
@@ -114,8 +117,8 @@ function Form() {
             name="checkbox"
             id="checkbox"
             type="checkbox"
-            onChange={handleCheckboxInputChange}
-            onBlur={validate}
+            onChange={handleCheckboxChange}
+            onBlur={validateCheckbox}
             required
             checked={isChecked}
           ></input>
