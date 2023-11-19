@@ -9,12 +9,20 @@ import postUserData from "../../apiHandlers/formApiHandler";
 import { getUserDataFromStore } from "../../services/getFormData";
 
 function Form() {
-  const USER_API_ENDPOINT = "http://localhost:5432/api/users";
+  const USER_API_ENDPOINT = "http://localhost:1010/api/users";
   const dispatch = useDispatch();
   const formData = useSelector((state: RootState) => state.form.formData);
   const userDataFromStore = getUserDataFromStore();
   const [isChecked, setIsChecked] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [isEmailTaken, setIsEmailTaken] = useState(false);
+
+  const handleInputChange = (name: string, value: string) => {
+    dispatch(submitForm({ ...formData, [name]: value }));
+    setSubmissionSuccess(false);
+    setIsEmailTaken(false);
+  };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(!isChecked);
@@ -31,14 +39,9 @@ function Form() {
     }
   };
 
-  const handleInputChange = (name: string, value: string) => {
-    dispatch(submitForm({ ...formData, [name]: value }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const isFormValid = Object.entries(formData).every(([key, value]) => {
+    const isFormValid = Object.entries(formData).every(([value]) => {
       if (typeof value === "string") {
         return value.trim() !== "";
       } else if (typeof value === "boolean") {
@@ -53,12 +56,21 @@ function Form() {
         await postUserData(USER_API_ENDPOINT, userDataFromStore);
         dispatch(resetForm());
         setIsChecked(false);
-      } catch (error) {
-        console.error("Error posting data:", error);
-        setError("Error occurred while submitting data.");
+        setSubmissionSuccess(true);
+        setError("");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        console.error("Error making post request:", error);
+        if (error.response && error.response.status === 400) {
+          setError("Error occurred while submitting data.");
+        } else {
+          setError("Error occurred while submitting data.");
+        }
+        setSubmissionSuccess(false);
       }
     } else {
-      setError("Please fill with valid data.");
+      setError("Please fill in with valid data.");
+      setSubmissionSuccess(false);
     }
   };
 
@@ -123,8 +135,13 @@ function Form() {
             checked={isChecked}
           ></input>
         </div>
-
+        {isEmailTaken && (
+          <div className="emailTakenError">Email is already taken.</div>
+        )}
         <div className={`error ${error ? "active" : ""}`}>{error}</div>
+        {submissionSuccess && (
+          <div className="successMessage">Form submitted successfully!</div>
+        )}
 
         <div className="buttonDiv">
           <Button type="submit" />

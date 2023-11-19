@@ -27,11 +27,12 @@ app.post("/api/users", async (req, res) => {
 
   try {
     await userService.createUser(req.body);
-  } catch (e) {
+  } catch (e: any) {
     res.status(400);
     res.send(
       JSON.stringify({
         status: "request body contains errors.",
+        error: e.message,
       })
     );
     return;

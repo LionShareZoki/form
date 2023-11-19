@@ -12,7 +12,7 @@ interface ResetFormAction {
   type: typeof RESET_FORM;
 }
 
-export const submitForm = (formData: FormData): SubmitFormAction => ({
+export const submitForm = (formData: MyFormData): SubmitFormAction => ({
   type: SUBMIT_FORM,
   payload: formData,
 });
@@ -20,14 +20,5 @@ export const submitForm = (formData: FormData): SubmitFormAction => ({
 export const resetForm = (): ResetFormAction => ({
   type: RESET_FORM,
 });
-
-export interface FormData {
-  firstName: string;
-  lastName: string;
-  address: string;
-  phone: string;
-  email: string;
-  isChecked: boolean;
-}
 
 export type FormAction = SubmitFormAction | ResetFormAction;

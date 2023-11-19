@@ -41,4 +41,8 @@ export class UserService implements IUserService {
 
     await this._userRepository.insertUser(user);
   }
+
+  public async getByEmail(email: string): Promise<User | null> {
+    return this._userRepository.getByEmail(email);
+  }
 }

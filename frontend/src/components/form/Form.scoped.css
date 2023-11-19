@@ -33,3 +33,11 @@ form {
   display: flex;
   justify-content: center;
 }
+
+.successMessage {
+  color: green;
+}
+
+.emailTakenError {
+  color: red;
+}
