@@ -7,6 +7,11 @@ import { submitForm, resetForm } from "../../redux/formActions";
 import { RootState } from "../../redux/rootReducer";
 import postUserData from "../../services/apiHandlers/formApiHandler";
 import { getUserDataFromStore } from "../../services/getFormData";
+import {
+  validateEmail,
+  validatePhone,
+  validateText,
+} from "../../services/validationService";
 
 function Form() {
   const USER_API_ENDPOINT = "http://localhost:1010/api/users";
@@ -41,14 +46,13 @@ function Form() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const isFormValid = Object.entries(formData).every(([value]) => {
-      if (typeof value === "string") {
-        return value.trim() !== "";
-      } else if (typeof value === "boolean") {
-        return true;
-      }
-      return false;
-    });
+    const isFormValid =
+      validateText(formData.firstName) === null &&
+      validateText(formData.lastName) === null &&
+      validateText(formData.address) === null &&
+      validatePhone(formData.phone) === null &&
+      validateEmail(formData.email) === null &&
+      isChecked;
 
     if (isChecked && isFormValid) {
       try {
