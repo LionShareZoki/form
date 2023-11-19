@@ -53,7 +53,7 @@ function FormInput(props: FormInputProps) {
         placeholder={props.placeholder}
         value={props.value}
         onChange={handleChange}
-        required
+        // I removed 'required' so that my validation can work properly
       ></input>
       <div className={`error ${error ? "active" : ""}`}>{error}</div>
     </div>

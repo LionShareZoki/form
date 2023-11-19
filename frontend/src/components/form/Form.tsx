@@ -69,7 +69,7 @@ function Form() {
         setSubmissionSuccess(false);
       }
     } else {
-      setError("Please fill in with valid data.");
+      setError("Please fill in valid data.");
       setSubmissionSuccess(false);
     }
   };
@@ -131,8 +131,8 @@ function Form() {
             type="checkbox"
             onChange={handleCheckboxChange}
             onBlur={validateCheckbox}
-            required
             checked={isChecked}
+            // I removed 'required' so that my validation can work properly
           ></input>
         </div>
         {isEmailTaken && (
