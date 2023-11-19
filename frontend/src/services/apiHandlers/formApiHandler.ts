@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MyFormData } from "../redux/formTypes";
+import { MyFormData } from "../../redux/formTypes";
 
 async function postUserData(url: string, userData: MyFormData) {
   try {
@@ -11,7 +11,5 @@ async function postUserData(url: string, userData: MyFormData) {
     throw error;
   }
 }
-
-
 
 export default postUserData;
