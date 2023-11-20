@@ -13,4 +13,4 @@ This form is created in React, Redux, Typescript, Express and Node.
 
 2.  `cd frontend` => `npm install` => `npm run dev`
 
-3.  `cd backend    =>  `npm install`  =>  `npm run dev`
+3.  `cd backend`    =>  `npm install`  =>  `npm run dev`
